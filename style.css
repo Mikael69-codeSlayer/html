@@ -1,0 +1,37 @@
+
+body {
+  text-align: center;
+}
+
+/* Male all h1:s green and have the font Verdana */
+h1 {
+  color: green;
+  font-family: Verdana;
+} 
+
+/* Set the size of all p element */
+
+p {
+  font-size: 18px;
+}
+
+/* Set font size + italic font for alla elements
+that have the class ingress */
+
+.ingress {
+  font-size: 22px;
+  font-style: italic;
+}
+
+.red {
+  color: red;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.wide-650-px {
+  width: 650px;
+}
+
