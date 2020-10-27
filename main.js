@@ -32,7 +32,7 @@ let persons = [
 
 // Add another person to the array
 // (arrays are dynamic - can change length in JS)
-persons.push(new Person('David', 5))
+persons.push(new Person('David', 5));
 
 // Change the property alive of Beata to false!
 persons[1].alive = false;
