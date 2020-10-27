@@ -5,7 +5,8 @@ export default class App {
   constructor() {
 
     this.createPersons();
-    this.listPersons();
+    this.createNewPersonEventHandling();
+    this.listPersons(); // also adds kill/revive event handling
 
   }
 
@@ -28,10 +29,59 @@ export default class App {
 
 
   listPersons() {
+
+    // Empty the content of person-list before adding persons
+    $('.person-list').empty();
+
     // Loop through the array (for each is named for...of in JS)
+    let index = 0;
     for (let person of this.persons) {
-      console.log(person.sayHi());
+
+      /* Use jQuery to add new html in the DOM inside
+      the element with class 'person-list
+      Note that we write the string as a template literal*/
+      // inside a template literal ${} does not refer to jQuery
+      // it is just that syntax for including JS expressions
+      $('.person-list').append(`
+      <div>
+      <h2>${person.name}</h2>
+       <p>${person.sayHi()}</p>
+        <button class="kill-revive-button" data-index="$"${index}
+        ">${person.alive ? 'Kill' : 'Revive'}</button>
+       </div>
+        `);
+
+      index++;
+
     }
 
+    // Add an event handler to all the kill/revive buttons
+    let that = this; // that = this instance of App;
+    $('.kill-revive-button').click(function () {
+      // $(this) = grab the element we clicked with jQuery
+      // (in a jQuery event handler this is the element clicked)
+      let person = that.persons[+$(this).attr('data-index')];
+      person.alive = !person.alive; // toggle dead/alive
+      that.listPersons();
+
+    });
+
   }
+  createNewPersonEventHandling() {
+    let that = this;
+    $('.add-person-button').click(function () {
+      // read the values of the name and age inputs fields
+      let name = $('.input-name').val();
+      let age = +$('.input-age').val();
+      if (name === '' || age === '') { return; }
+      // add a new person to the persons array
+      that.persons.push(new Person(name, age));
+      // update the html by calling listPersons
+      that.listPersons();
+      // empty the name and age fields
+      $('.input-name').val('');
+      $('.input-age').val('');
+    });
+  }
+
 }
